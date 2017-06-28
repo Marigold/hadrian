@@ -860,12 +860,12 @@ fcns:
             try:
                 tested = titus.prettypfa.jsonNode(test, lineNumbers=False, check=False)
             except PrettyPfaException:
-                print
-                print test
+                print()
+                print(test)
             else:
                 if tested != asjson:
-                    print
-                    print test
+                    print()
+                    print(test)
                 self.assertEqual(tested, asjson)
 
     def testTypedefs(self):

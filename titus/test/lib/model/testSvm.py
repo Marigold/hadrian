@@ -40,8 +40,8 @@ class TestLib1ModelSvm(unittest.TestCase):
 	alpha  = clf.dual_coef_.flatten()
 	b  = clf._intercept_ #(reverse sign, weird convention/bug in scikit)
         # reproduces
-        print clf.decision_function([0, 1])
-        print clf.decision_function([3, 3])
+        print(clf.decision_function([0, 1]))
+        print(clf.decision_function([3, 3]))
         """
 
         engine, = PFAEngine.fromYaml("""
@@ -108,8 +108,8 @@ action:
 	alpha  = clf.dual_coef_.flatten()
 	b  = clf._intercept_ #(reverse sign, weird convention/bug in scikit)
         # reproduces
-        print clf.decision_function([0, 1])
-        print clf.decision_function([3, 3])
+        print(clf.decision_function([0, 1]))
+        print(clf.decision_function([3, 3]))
         """
 
         engine, = PFAEngine.fromYaml("""
@@ -179,8 +179,8 @@ action:
 	coeff  = clf.dual_coef_.flatten()
 	const = clf._intercept_ #(reverse sign, weird convention/bug in scikit)
         # reproduces
-        print clf.decision_function([0, 1])
-        print clf.decision_function([3, 3])
+        print(clf.decision_function([0, 1]))
+        print(clf.decision_function([3, 3]))
         """
 
         engine, = PFAEngine.fromYaml("""
@@ -250,8 +250,8 @@ action:
 	coeff  = clf.dual_coef_.flatten()
 	const = clf._intercept_ #(reverse sign, weird convention/bug in scikit)
         # reproduces
-        print clf.decision_function([0, 1])
-        print clf.decision_function([3, 3])
+        print(clf.decision_function([0, 1]))
+        print(clf.decision_function([3, 3]))
         """
 
         engine, = PFAEngine.fromYaml("""
