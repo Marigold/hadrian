@@ -77,14 +77,15 @@ class PFAVersion(object):
     def __repr__(self):
         """Represent a PFAVersion as a dotted triple on the screen."""
         return "{0}.{1}.{2}".format(self.major, self.minor, self.release)
-    def __cmp__(self, other):
+    # __cmp__() and in-built cmp() is no longer supported in Python 3 so replaced with a new function definition.
+    def cmp(self, other):
         """Strict ordering on PFAVersions: check major number first, then minor, then release."""
         if self.major == other.major and self.minor == other.minor:
-            return cmp(self.release, other.release)
+            return (self.release > other.release) - (self.release < other.release)
         elif self.major == other.major:
-            return cmp(self.minor, other.minor)
+            return (self.minor > other.minor) - (self.minor < other.minor)
         else:
-            return cmp(self.major, other.major)
+            return (self.major > other.major) - (self.major < other.major)
     @staticmethod
     def fromString(x):
         """Create a ``PFAVersion`` from a dotted string.
@@ -123,12 +124,12 @@ class Lifespan(object):
 
         if deprecation is None and death is None:
             pass
-        elif deprecation is not None and death is not None and deprecation < death:
+        elif deprecation is not None and death is not None and deprecation.cmp(death) < 0:
             pass
         else:
             raise ValueError("deprecation and death must be specified together, and deprecation version must be strictly earlier than death version")
 
-        if birth is not None and deprecation is not None and birth >= deprecation:
+        if birth is not None and deprecation is not None and birth.cmp(deprecation) >= 0:
             raise ValueError("if birth and deprecation are specified together, birth version must be strictly earlier than deprecation version")
 
         self.birth = birth
@@ -142,7 +143,7 @@ class Lifespan(object):
         :rtype: bool
         :return: ``True`` if the feature exists and is not deprecated in version ``now``, ``False`` otherwise.
         """
-        return (self.birth is None or now >= self.birth) and (self.deprecation is None or now < self.deprecation)
+        return (self.birth is None or now.cmp(self.birth) >= 0) and (self.deprecation is None or now.cmp(self.deprecation) < 0)
 
     def deprecated(self, now):
         """:type now: titus.signature.PFAVersion
@@ -150,7 +151,7 @@ class Lifespan(object):
         :rtype: bool
         :return: ``True`` if the feature exists and is deprecated in version ``now``, ``False`` otherwise.
         """
-        return self.deprecation is not None and self.deprecation <= now < self.death
+        return self.deprecation is not None and (now.cmp(self.deprecation) >= 0) and (now.cmp(self.death) < 0)
 
 class LabelData(object):
     """Used internally to carry information about a label in a wildcard and how well it matches a prospective argument type."""
