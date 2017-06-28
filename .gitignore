@@ -1,2 +1,8 @@
 pfa
 scoringengine_org
+*.pyc
+titus/titus.egg-info/top_level.txt
+titus/titus.egg-info/SOURCES.txt
+titus/titus.egg-info/requires.txt
+titus/titus.egg-info/PKG-INFO
+titus/titus.egg-info/dependency_links.txt
