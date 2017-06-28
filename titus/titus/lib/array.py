@@ -139,7 +139,7 @@ class Contains(LibFcn):
     errcodeBase = 15070
     def __call__(self, state, scope, pos, paramTypes, haystack, needle):
         if isinstance(needle, (list, tuple)):
-            for start in xrange(len(haystack) - len(needle) + 1):
+            for start in range(len(haystack) - len(needle) + 1):
                 if needle == haystack[start:(start + len(needle))]:
                     return True
             return False
@@ -172,7 +172,7 @@ class Count(LibFcn):
                     return 0
                 else:
                     count = 0
-                    for start in xrange(len(haystack) - len(needle) + 1):
+                    for start in range(len(haystack) - len(needle) + 1):
                         if needle == haystack[start:(start + len(needle))]:
                             count += 1
                     return count
@@ -194,7 +194,7 @@ class Index(LibFcn):
     errcodeBase = 15090
     def __call__(self, state, scope, pos, paramTypes, haystack, needle):
         if isinstance(needle, (list, tuple)):
-            for start in xrange(len(haystack) - len(needle) + 1):
+            for start in range(len(haystack) - len(needle) + 1):
                 if needle == haystack[start:(start + len(needle))]:
                     return start
             return -1
@@ -218,7 +218,7 @@ class RIndex(LibFcn):
     errcodeBase = 15100
     def __call__(self, state, scope, pos, paramTypes, haystack, needle):
         if isinstance(needle, (list, tuple)):
-            for start in xrange(len(haystack) - len(needle), -1, -1):
+            for start in range(len(haystack) - len(needle), -1, -1):
                 if needle == haystack[start:(start + len(needle))]:
                     return start
             return -1
@@ -228,7 +228,7 @@ class RIndex(LibFcn):
                     return len(haystack) - 1 - index
             return -1
         else:
-            for index in xrange(len(haystack) - 1, -1, -1):
+            for index in range(len(haystack) - 1, -1, -1):
                 if needle == haystack[index]:
                     return index
             return -1
@@ -1152,7 +1152,7 @@ class SlidingWindow(LibFcn):
             raise PFARuntimeException("step < 1", self.errcodeBase + 1, self.name, pos)
         out = []
         i = 0
-        for start in xrange(0, len(a), step):
+        for start in range(0, len(a), step):
             chunk = a[start:(start + size)]
             if len(chunk) == size:
                 out.append(chunk)

@@ -73,7 +73,7 @@ class MetricWithMissingValues(LibFcn):
         tally = 0.0
         numer = 0.0
         denom = 0.0
-        for i in xrange(length):
+        for i in range(length):
             xi = x[i]
             yi = y[i]
             if xi is not None and yi is not None:
@@ -160,7 +160,7 @@ class Minkowski(LibFcn):
         numer = 0.0
         denom = 0.0
         if math.isinf(p):
-            for i in xrange(length):
+            for i in range(length):
                 xi = x[i]
                 yi = y[i]
                 if xi is not None and yi is not None:
@@ -178,7 +178,7 @@ class Minkowski(LibFcn):
             else:
                 return tally * numer / denom
         else:
-            for i in xrange(length):
+            for i in range(length):
                 xi = x[i]
                 yi = y[i]
                 if xi is not None and yi is not None:

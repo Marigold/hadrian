@@ -143,7 +143,7 @@ def printValue(format="g"):
             state["j"] = "{:5s} (jump)"
             for v in values:
                 if v is not None:
-                    state["n"] = "{0:5s}" + "".join((" {%d:%s}" % (i + 1, format)) for i in xrange(len(v)))
+                    state["n"] = "{0:5s}" + "".join((" {%d:%s}" % (i + 1, format)) for i in range(len(v)))
                     break
             if "n" in state:
                 state["ready"] = True
@@ -176,7 +176,7 @@ def printChange(format="g"):
             state["j"] = "{:5s} (jump)"
             for corr in corrections:
                 if corr is not None:
-                    state["n"] = "{0:5s}" + "".join((" {%d:%s}" % (i + 1, format)) for i in xrange(len(corr)))
+                    state["n"] = "{0:5s}" + "".join((" {%d:%s}" % (i + 1, format)) for i in range(len(corr)))
                     break
             if "n" in state:
                 state["ready"] = True
@@ -306,7 +306,7 @@ class KMeans(object):
         self.numberOfClusters = numberOfClusters
 
         self.clusters = []
-        for index in xrange(numberOfClusters):
+        for index in range(numberOfClusters):
             self.clusters.append(self.newCluster())
 
         self.minPointsInCluster = minPointsInCluster
@@ -344,7 +344,7 @@ class KMeans(object):
         if subsetSize <= self.numberOfClusters:
             raise TypeError("subsetSize must be strictly greater than the numberOfClusters")
 
-        indexes = random.sample(xrange(self.dataset.shape[0]), subsetSize)
+        indexes = random.sample(range(self.dataset.shape[0]), subsetSize)
         dataset = self.dataset[indexes,:]
         if self.weights is None:
             weights = None
@@ -461,7 +461,7 @@ class KMeans(object):
         else:
             maxPointsForClustering = self.maxPointsForClustering
 
-        trialSizes = [base**x for x in xrange(int(math.log(maxPointsForClustering, base)) + 1) if base**x > minPointsInCluster]
+        trialSizes = [base**x for x in range(int(math.log(maxPointsForClustering, base)) + 1) if base**x > minPointsInCluster]
 
         for trialSize in trialSizes:
             dataset, weights = self.randomSubset(trialSize)
@@ -547,7 +547,7 @@ class KMeans(object):
 
         if populations:
             indexOfClosestCluster = self.closestCluster(self.dataset, self.weights)
-            for clusterIndex in xrange(len(self.clusters)):
+            for clusterIndex in range(len(self.clusters)):
                 out[clusterIndex]["population"] = int(numpy.sum(indexOfClosestCluster == clusterIndex))
 
         if sort:

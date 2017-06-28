@@ -252,7 +252,7 @@ def extcomplete(node, items):
 
     elif isinstance(node, (list, tuple)):
         formatter = "%%0%dd" % int(math.ceil(math.log10(len(node))))
-        return [quote(formatter % x) + (", " if isinstance(node[x], (list, tuple, dict)) else "]") for x in xrange(len(node))]
+        return [quote(formatter % x) + (", " if isinstance(node[x], (list, tuple, dict)) else "]") for x in range(len(node))]
 
     else:
         return []

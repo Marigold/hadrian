@@ -583,7 +583,7 @@ def _readArgument(data, dot, avroTypeBuilder):
             rest = words[1:]
             if not validSymbolName(ref):
                 raise PFASyntaxException("\"{0}\" is not a valid symbol name".format(ref), dot)
-            for i in xrange(len(rest)):
+            for i in range(len(rest)):
                 try:
                     asint = int(rest[i])
                 except ValueError:
