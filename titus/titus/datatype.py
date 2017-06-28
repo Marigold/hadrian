@@ -893,7 +893,7 @@ def jsonDecoder(avroType, value):
             pass
     elif isinstance(avroType, AvroLong):
         try:
-            return long(value)
+            return int(value)
         except (ValueError, TypeError):
             pass
     elif isinstance(avroType, AvroFloat):
@@ -969,13 +969,13 @@ def jsonEncoder(avroType, value, tagged=True):
         return value
     elif isinstance(avroType, AvroBoolean) and (value is True or value is False):
         return value
-    elif isinstance(avroType, AvroInt) and isinstance(value, (int, long)) and value is not True and value is not False:
+    elif isinstance(avroType, AvroInt) and isinstance(value, int) and value is not True and value is not False:
         return value
-    elif isinstance(avroType, AvroLong) and isinstance(value, (int, long)) and value is not True and value is not False:
+    elif isinstance(avroType, AvroLong) and isinstance(value, int) and value is not True and value is not False:
         return value
-    elif isinstance(avroType, AvroFloat) and isinstance(value, (int, long, float)) and value is not True and value is not False:
+    elif isinstance(avroType, AvroFloat) and isinstance(value, (int, float)) and value is not True and value is not False:
         return float(value)
-    elif isinstance(avroType, AvroDouble) and isinstance(value, (int, long, float)) and value is not True and value is not False:
+    elif isinstance(avroType, AvroDouble) and isinstance(value, (int, float)) and value is not True and value is not False:
         return float(value)
     elif isinstance(avroType, AvroBytes) and isinstance(value, str):
         return value
@@ -1047,11 +1047,11 @@ def compare(avroType, x, y):
         return 0
     elif isinstance(avroType, AvroBoolean) and (x is True or x is False) and (y is True or y is False):
         return cmp(x, y)    # agrees with Java
-    elif isinstance(avroType, AvroInt) and isinstance(x, (int, long)) and x is not True and x is not False and isinstance(y, (int, long)) and y is not True and y is not False:
+    elif isinstance(avroType, AvroInt) and isinstance(x, int) and x is not True and x is not False and isinstance(y, int) and y is not True and y is not False:
         return cmp(x, y)
-    elif isinstance(avroType, AvroLong) and isinstance(x, (int, long)) and x is not True and x is not False and isinstance(y, (int, long)) and y is not True and y is not False:
+    elif isinstance(avroType, AvroLong) and isinstance(x, int) and x is not True and x is not False and isinstance(y, int) and y is not True and y is not False:
         return cmp(x, y)
-    elif isinstance(avroType, AvroFloat) and isinstance(x, (int, long, float)) and x is not True and x is not False and isinstance(y, (int, long, float)) and y is not True and y is not False:
+    elif isinstance(avroType, AvroFloat) and isinstance(x, (int, float)) and x is not True and x is not False and isinstance(y, (int, float)) and y is not True and y is not False:
         return cmp(x, y)
         if math.isnan(x):
             if math.isnan(y):
@@ -1063,7 +1063,7 @@ def compare(avroType, x, y):
                 return -1
             else:
                 return cmp(x, y)
-    elif isinstance(avroType, AvroDouble) and isinstance(x, (int, long, float)) and x is not True and x is not False and isinstance(y, (int, long, float)) and y is not True and y is not False:
+    elif isinstance(avroType, AvroDouble) and isinstance(x, (int, float)) and x is not True and x is not False and isinstance(y, (int, float)) and y is not True and y is not False:
         if math.isnan(x):
             if math.isnan(y):
                 return 0
@@ -1212,7 +1212,7 @@ def checkData(data, avroType):
                 raise TypeError("expecting {0}, found {1}".format(ts(avroType), data))
         elif isinstance(data, integerTypes):
             data = int(data)
-        elif isinstance(data, (int, long)):
+        elif isinstance(data, int):
             return data
         else:
             raise TypeError("expecting {0}, found {1}".format(ts(avroType), data))
@@ -1225,7 +1225,7 @@ def checkData(data, avroType):
                 raise TypeError("expecting {0}, found {1}".format(ts(avroType), data))
         elif isinstance(data, integerTypes):
             data = int(data)
-        elif isinstance(data, (int, long)):
+        elif isinstance(data, int):
             return data
         else:
             raise TypeError("expecting {0}, found {1}".format(ts(avroType), data))
@@ -1238,7 +1238,7 @@ def checkData(data, avroType):
                 raise TypeError("expecting {0}, found {1}".format(ts(avroType), data))
         elif isinstance(data, floatTypes):
             data = float(data)
-        elif isinstance(data, (int, long)):
+        elif isinstance(data, int):
             data = float(data)
         elif isinstance(data, float):
             return data
@@ -1253,7 +1253,7 @@ def checkData(data, avroType):
                 raise TypeError("expecting {0}, found {1}".format(ts(avroType), data))
         elif isinstance(data, floatTypes):
             return float(data)
-        elif isinstance(data, (int, long)):
+        elif isinstance(data, int):
             return float(data)
         elif isinstance(data, float):
             return data

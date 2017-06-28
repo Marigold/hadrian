@@ -101,7 +101,7 @@ def simpleComparison(paramTypes, datum, comparison, missingOperators, parser, co
         if isinstance(fieldValueType, (AvroInt, AvroLong, AvroFloat, AvroDouble)):
             if isinstance(value, dict) and (value.keys() == ["int"] or value.keys() == ["long"] or value.keys() == ["float"] or value.keys() == ["double"]):
                 value, = value.values()
-            if not isinstance(value, (int, long, float)):
+            if not isinstance(value, (int, float)):
                 raise PFARuntimeException("bad value type", code1, fcnName, pos)
 
             if operator == "<=":
