@@ -333,7 +333,7 @@ class ResolvedSubs(Token, MiniAst):
     def asExpr(self, state):
         if isinstance(self.value, Ast):
             return self.value
-        elif isinstance(self.value, basestring):
+        elif isinstance(self.value, str):
             return ppfa(self.value)
         else:
             return pfa(self.value)
@@ -2150,7 +2150,7 @@ def subs(originalAst, **subs2):
     def pf(node):
         out = subs2[node.name]
         if node.context == "expr":
-            if isinstance(out, basestring):
+            if isinstance(out, str):
                 out = ppfa(out)
             elif not isinstance(out, Ast):
                 out = pfa(out)

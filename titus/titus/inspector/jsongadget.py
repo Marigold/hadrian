@@ -288,7 +288,7 @@ class IndexCommand(Command):
 
             regex = args[-1].regex()
             def display(i):
-                if isinstance(i, basestring):
+                if isinstance(i, str):
                     if " " in i:
                         return json.dumps(i)
                     else:
@@ -391,7 +391,7 @@ class FindCommand(Command):
 
             regex = args[-1].regex()
             def display(i):
-                if isinstance(i, basestring):
+                if isinstance(i, str):
                     if " " in i:
                         return json.dumps(i)
                     else:
@@ -512,7 +512,7 @@ class ChangeCommand(Command):
                 self.syntaxError()
 
             def display(i):
-                if isinstance(i, basestring):
+                if isinstance(i, str):
                     if " " in i:
                         return json.dumps(i)
                     else:

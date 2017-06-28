@@ -149,7 +149,7 @@ class InputOutputCommand(Command):
             except KeyError:
                 raise InspectorError("PFA document \"{0}\" is missing {1} section')".format(args[0].text, self.name))
 
-            if isinstance(node, basestring):
+            if isinstance(node, str):
                 names = model.engine.parser.names.names.keys()
                 if node in names:
                     node = model.engine.parser.getAvroType(node).jsonNode(set())
@@ -702,7 +702,7 @@ class InternalizeCommand(Command):
                     raise InspectorError("{0} \"{1}\" is not currently json".format(which, args[1].text))
 
                 url = obj.get("init")
-                if not isinstance(url, basestring):
+                if not isinstance(url, str):
                     raise InspectorError("{0} \"{1}\" does not have a string-valued init".format(which, args[1].text))
 
                 print("Internalizing {0} \"{1}\" from {2}".format(which, args[1].text, url))

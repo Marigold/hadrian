@@ -345,7 +345,7 @@ def avscToPretty(avsc, indent=0):
     :return: PrettyPFA representation
     """
 
-    if isinstance(avsc, basestring):
+    if isinstance(avsc, str):
         return " " * indent + avsc
     elif isinstance(avsc, dict) and "type" in avsc:
         tpe = avsc["type"]

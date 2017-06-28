@@ -509,7 +509,7 @@ output: string
 action: [["hello world"]]
 ''')
         self.assertEqual(engine.action(None), "hello world")
-        self.assertTrue(isinstance(engine.action(None), basestring))
+        self.assertTrue(isinstance(engine.action(None), str))
 
         engine, = PFAEngine.fromYaml('''
 input: "null"
@@ -517,7 +517,7 @@ output: string
 action: {string: "hello world"}
 ''')
         self.assertEqual(engine.action(None), "hello world")
-        self.assertTrue(isinstance(engine.action(None), basestring))
+        self.assertTrue(isinstance(engine.action(None), str))
 
     def testLiteralBase64(self):
         engine, = PFAEngine.fromYaml('''
@@ -526,7 +526,7 @@ output: bytes
 action: {base64: "aGVsbG8="}
 ''')
         self.assertEqual(engine.action(None), "hello")
-        self.assertTrue(isinstance(engine.action(None), basestring))
+        self.assertTrue(isinstance(engine.action(None), str))
 
     def testComplexLiterals(self):
         engine, = PFAEngine.fromYaml('''
