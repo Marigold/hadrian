@@ -66,7 +66,7 @@ def convert(xsdFileName):
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import version_independent as ind    
+import titus.pmml.version_independent as ind    
 
 namespace = "{0}"
 
