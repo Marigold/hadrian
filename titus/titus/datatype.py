@@ -474,8 +474,8 @@ class AvroArray(AvroContainer):
         :type items: titus.datatype.AvroType
         :param items: type of the contained objects
         """
-        self._schema = avro.schema.ArraySchema("null", avro.schema.Names())
-        self._schema.set_prop("items", items.schema)
+        self._schema = avro.schema.ArraySchema(items.schema)
+
     @property
     def items(self):
         """Type of the contained objects."""
@@ -494,8 +494,7 @@ class AvroMap(AvroContainer, AvroMapping):
         :type values: titus.datatype.AvroType
         :param values: type of the contained objects
         """
-        self._schema = avro.schema.MapSchema("null", avro.schema.Names())
-        self._schema.set_prop("values", values.schema)
+        self._schema = avro.schema.MapSchema(values.schema)
     @property
     def values(self):
         """Type of the contained objects."""
@@ -520,8 +519,8 @@ class AvroRecord(AvroContainer, AvroMapping, AvroCompiled):
         """
         if name is None:
             name = titus.util.uniqueRecordName()
-        self._schema = avro.schema.RecordSchema(name, namespace, [], avro.schema.Names(), "record")
-        self._schema.set_prop("fields", [x.schema for x in fields])
+        self._schema = avro.schema.RecordSchema(name, namespace, [x.schema for x in fields], names=avro.schema.Names(), record_type="record")
+
     @property
     def fields(self):
         """Get the fields as a list of titus.datatype.AvroField objects."""
@@ -562,7 +561,7 @@ class AvroUnion(AvroType):
             raise titus.errors.AvroException("duplicate in union: " + ", ".join(map(ts, types)))
         if "union" in names:
             raise titus.errors.AvroException("nested union: " + ", ".join(map(ts, types)))
-        self._schema = avro.schema.UnionSchema([], avro.schema.Names())
+        self._schema = avro.schema.UnionSchema([])
         self._schema._schemas = [x.schema for x in types]
     @property
     def types(self):
