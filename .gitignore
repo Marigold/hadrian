@@ -6,3 +6,4 @@ titus/titus.egg-info/SOURCES.txt
 titus/titus.egg-info/requires.txt
 titus/titus.egg-info/PKG-INFO
 titus/titus.egg-info/dependency_links.txt
+titus/*.csv
