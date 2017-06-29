@@ -732,7 +732,7 @@ class ForwardDeclarationParser(object):
                         try:
                             gotit = avro.schema.SchemaFromJSONData(obj, self.names)
                         except avro.schema.SchemaParseException as err:
-                            self.names.names = oldnames
+                            self.names.__setattr__("names", oldnames)
                             errorMessages[jsonString] = str(err)
                         else:
                             schemae[jsonString] = gotit
