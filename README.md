@@ -1,3 +1,13 @@
+Information
+========
+
+This is a fork of the Hadrian Project - https://github.com/opendatagroup/hadrian
+The purpose of this fork is to support Titus for Python 3, using avro-python3 module.
+The fork is currently in experimental stage.
+
+**Update 1** - 30 June, 2017: [Tutorial 1: small model in Titus (Python)](https://github.com/opendatagroup/hadrian/wiki/Tutorial-Small-Model-Titus) is now fully functional.
+Make sure to replace `fields = dataset.next()` with `fields = next(dataset)` and `print "accuracy", numCorrect/numTotal` with `print("accuracy", numCorrect/numTotal)` for Python 3.
+
 Hadrian: implementations of the PFA specification
 ========
 
