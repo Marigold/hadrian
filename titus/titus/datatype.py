@@ -1269,7 +1269,7 @@ def checkData(data, avroType):
 
     elif isinstance(avroType, (AvroString, AvroEnum)):
         if isinstance(data, str):
-            return data.decode("utf-8", "replace")
+            return data
         elif isinstance(data, unicode):
             return data
         else:
@@ -1287,7 +1287,7 @@ def checkData(data, avroType):
             for key in data:
                 value = checkData(data[key], avroType.values)
                 if isinstance(key, str):
-                    newData[key.decode("utf-8", "replace")] = value
+                    newData[key] = value
                 elif isinstance(key, unicode):
                     newData[key] = value
                 else:
