@@ -519,7 +519,7 @@ class AvroRecord(AvroContainer, AvroMapping, AvroCompiled):
         """
         if name is None:
             name = titus.util.uniqueRecordName()
-        self._schema = avro.schema.RecordSchema(name, namespace, [x.schema for x in fields], names=avro.schema.Names(), record_type="record")
+        self._schema = avro.schema.RecordSchema(name, namespace, fields=[x.schema for x in fields], names=avro.schema.Names(), record_type="record")
 
     @property
     def fields(self):
@@ -593,7 +593,7 @@ class AvroField(object):
         :type order: "ascending", "descending", or "ignore"
         :param order: sort order (used in Hadoop secondary sort)
         """
-        self._schema = avro.schema.Field(avroType.schema.to_json(), name, default is not None, default, order, avro.schema.Names())
+        self._schema = avro.schema.Field(avroType.schema.to_json(), name, None, default is not None, default, order, avro.schema.Names())
     @property
     def schema(self):
         """Get the field type as an avro.schema.Schema."""
@@ -613,13 +613,17 @@ class AvroField(object):
         """Get the field default value."""
         return self.schema.default
     @property
+    def has_default(self):
+        """Get whether the field has default value."""
+        return self.schema.has_default        
+    @property
     def order(self):
         """Get the field order."""
         return self.schema.order
     def jsonNode(self, memo):
         """Get the field as a Python-encoded JSON node."""
         out = {"name": self.name, "type": self.avroType.jsonNode(memo)}
-        if self.default is not None:
+        if self.has_default:
             out["default"] = self.default
         if self.order is not None:
             out["order"] = self.order
