@@ -82,7 +82,7 @@ def jsonToAvroType(x):
     :return: AvroType object
     """
 
-    return schemaToAvroType(avro.schema.parse(x))
+    return schemaToAvroType(avro.schema.Parse(x))
 
 def jsonNodeToAvroType(x):
     """Convert a Python-encoded Avro type into a titus.datatype.AvroType.
@@ -93,7 +93,7 @@ def jsonNodeToAvroType(x):
     :return: AvroType object
     """
 
-    return schemaToAvroType(avro.schema.parse(json.dumps(x)))
+    return schemaToAvroType(avro.schema.Parse(json.dumps(x)))
 
 def schemaToAvroType(schema):
     """Convert an Avro schema into a titus.datatype.AvroType.
