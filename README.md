@@ -1,7 +1,7 @@
 Information
 ========
 
-This is an experimental fork of the [Hadrian Project](https://github.com/opendatagroup/hadrian). The purpose of this fork is to support Titus for Python 3, using avro-python3 module.
+This is an experimental fork of the [Hadrian Project](https://github.com/opendatagroup/hadrian). The purpose of this fork is to support **Titus** for **Python 3**, using avro-python3 module.
 
 
 **Update 1** - 30 June, 2017: [Tutorial 1: small model in Titus (Python)](https://github.com/opendatagroup/hadrian/wiki/Tutorial-Small-Model-Titus) is now fully functional.
