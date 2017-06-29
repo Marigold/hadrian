@@ -187,7 +187,7 @@ class AvroType(Type):
 
     def _recordFieldsOkay(self, other, memo, checkRecord):
         for xf in self.fields:
-            if xf.default is None:
+            if not xf.has_default:
                 if not any(xf.name == yf.name and xf.avroType.accepts(yf.avroType, memo, checkRecord) for yf in other.fields):
                     return False
             else:
