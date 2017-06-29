@@ -1132,12 +1132,12 @@ class MiniAssignment(MiniAst):
     def __repr__(self):
         return "MiniAssignment({0}, {1})".format(self.pairs, self.qualifier)
     def asExpr(self, state):
-        if self.qualifier is None and len(self.pairs) == 1 and "." in self.pairs.keys()[0]:
-            pieces = self.pairs.keys()[0].split(".")
+        if self.qualifier is None and len(self.pairs) == 1 and "." in list(self.pairs.keys())[0]:
+            pieces = list(self.pairs.keys())[0].split(".")
             base = pieces[0]
             path = [LiteralString(x, self.pos) for x in pieces[1:]]
 
-            to = self.pairs.values()[0].asExpr(state)
+            to = list(self.pairs.values())[0].asExpr(state)
             if isinstance(to, FcnRef):
                 raise PrettyPfaException("direct assignments (with an = sign) cannot refer to functions, such as {0} at {1}".format(to.name, to.pos))
             elif isinstance(to, FcnDef):
@@ -1146,7 +1146,7 @@ class MiniAssignment(MiniAst):
             if base in state.cellNames:
                 return CellTo(base, path, to, self.pos)
             elif base in state.poolNames:
-                return PoolTo(base, path, to, self.pairs.values()[0].asExpr(state), self.pos)
+                return PoolTo(base, path, to, list(self.pairs.values())[0].asExpr(state), self.pos)
             else:
                 return AttrTo(Ref(base, self.pos), path, to, self.pos)
 
@@ -1162,7 +1162,7 @@ class MiniAssignment(MiniAst):
             if name in state.cellNames:
                 return CellTo(name, [], to, self.pos)
             elif name in state.poolNames:
-                return PoolTo(name, [], to, self.pairs.values()[0].asExpr(state), self.pos)
+                return PoolTo(name, [], to, list(self.pairs.values())[0].asExpr(state), self.pos)
             else:
                 return SetVar({name: to}, self.pos)
             

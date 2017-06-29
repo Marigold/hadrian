@@ -51,7 +51,7 @@ def simpleComparison(paramTypes, datum, comparison, missingOperators, parser, co
             else:
                 fieldValueType = withoutNull
 
-            if isinstance(fieldValue, dict) and len(fieldValue) == 1 and any(parser.getAvroType(x).name == fieldValue.keys()[0] for x in withoutNull):
+            if isinstance(fieldValue, dict) and len(fieldValue) == 1 and any(parser.getAvroType(x).name == list(fieldValue.keys())[0] for x in withoutNull):
                 fieldValue, = fieldValue.values()
         
     fieldValueType = parser.getAvroType(fieldValueType)
@@ -194,7 +194,7 @@ class SurrogateTest(LibFcn):
             result = callfcn(state, scope, missingTest, [datum, comparison])
             if result is not None:
                 if isinstance(result, dict) and result.keys() == ["boolean"]:
-                    return result.values()[0]
+                    return list(result.values())[0]
                 else:
                     return result
         raise PFARuntimeException("no successful surrogate", self.errcodeBase + 0, self.name, pos)

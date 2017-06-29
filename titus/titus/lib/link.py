@@ -49,7 +49,7 @@ class SoftMax(LibFcn):
         if paramTypes[0]["type"] == "map":
             xx = x.copy()
             tmp = map(abs, xx.values())
-            if xx.values()[tmp.index(max(tmp))] >= 0:
+            if list(xx.values())[tmp.index(max(tmp))] >= 0:
                 m = max(xx.values())
             else:
                 m = min(xx.values())
