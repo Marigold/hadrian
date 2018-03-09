@@ -3,7 +3,7 @@
 # Copyright (C) 2014  Open Data ("Open Data" refers to
 # one or more of the following companies: Open Data Partners LLC,
 # Open Data Research LLC, or Open Data Capital LLC.)
-# 
+#
 # This file is part of Hadrian.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -354,7 +354,8 @@ class Sig(Signature):
 
         if self.lifespan.current(version) or self.lifespan.deprecated(version):
             labelData = {}
-            if len(self.params) == len(args) and all(self.check(list(p.values())[0], a, labelData, False, False) for p, a in zip(self.params, args)):
+            checks = [self.check(list(p.values())[0], a, labelData, False, False) for p, a in zip(self.params, args)]
+            if len(self.params) == len(args) and all(checks):
                 try:
                     assignments = dict((l, ld.determineAssignment()) for l, ld in labelData.items())
                     assignedParams = [self.assign(list(p.values())[0], a, assignments) for p, a in zip(self.params, args)]
@@ -464,7 +465,7 @@ class Sig(Signature):
 
             labelData.update(labelData2)
             return found
-            
+
         elif isinstance(pat, P.Union) and isinstance(arg, AvroType):
             return any(self.check(p, arg, labelData, strict, reversed) for p in pat.types)
 

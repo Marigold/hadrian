@@ -3,7 +3,7 @@
 # Copyright (C) 2014  Open Data ("Open Data" refers to
 # one or more of the following companies: Open Data Partners LLC,
 # Open Data Research LLC, or Open Data Capital LLC.)
-# 
+#
 # This file is part of Hadrian.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -255,7 +255,7 @@ class SymbolTable(object):
             return self.parent.pool(name)
         else:
             return None
-        
+
     def newScope(self, sealedAbove, sealedWithin):
         """Create a new scope with this as parent.
 
@@ -652,7 +652,7 @@ class Subs(Ast):
 
     def __repr__(self):
         return "<<" + self.name + ">>"
-        
+
 class Method(object):
     """PFA execution method may be "map", "emit", or "fold"."""
     MAP = "map"
@@ -1141,7 +1141,7 @@ class Cell(Ast):
 
         if not isinstance(source, str) and not source is None:
             raise PFASyntaxException("\"source\" must be a string or None", pos)
-        
+
         if shared and rollback:
             raise PFASyntaxException("shared and rollback are mutually incompatible flags for a Cell", pos)
 
@@ -1182,7 +1182,7 @@ class Cell(Ast):
             return json.loads(self.init(self.avroType))
         else:
             return json.loads(self.init)
-        
+
     def jsonNode(self, lineNumbers, memo):
         """Convert this abstract syntax tree to Pythonized JSON.
 
@@ -1301,7 +1301,7 @@ class Pool(Ast):
         if self.source != CellPoolSource.EMBEDDED:
             out["source"] = self.source
         return out
-            
+
     @titus.util.case
     class Context(AstContext):
         def __init__(self): pass
@@ -1367,7 +1367,7 @@ class HasPath(object):
         for indexIndex, expr in enumerate(self.path):
             exprContext, exprResult = expr.walk(task, scope, functionTable, engineOptions, version)
             calls = calls.union(exprContext.calls)
-            
+
             if isinstance(walkingType, AvroArray):
                 if isinstance(exprContext.retType, AvroLong) or isinstance(exprContext.retType, AvroInt):
                     walkingType = walkingType.items
@@ -1630,7 +1630,7 @@ class FcnRefFill(Argument):
         :type pos: string or ``None``
         :param pos: source file location from the locator mark
         """
-        
+
         if not isinstance(pos, str) and not pos is None:
             raise PFASyntaxException("\"pos\" must be a string or None", None)
 
@@ -3397,7 +3397,7 @@ class AttrTo(Expression, HasPath):
             context = self.Context(exprContext.retType, calls.union(toContext.calls).union(set([self.desc])), exprResult, exprContext.retType, setType, pathResult, task(toContext, engineOptions), toContext.fcnType, self.pos)   # Two-parameter task?  task(toContext, engineOptions, toContext.fcnType)
 
         return context, task(context, engineOptions)
-        
+
     def jsonNode(self, lineNumbers, memo):
         """Convert this abstract syntax tree to Pythonized JSON.
 
@@ -3731,7 +3731,7 @@ class PoolGet(Expression, HasPath):
         retType, calls, pathResult = self.walkPath(AvroMap(poolType), task, symbolTable, functionTable, engineOptions, version)
         context = self.Context(retType, calls.union(set([self.desc])), self.pool, pathResult, shared, self.pos)
         return context, task(context, engineOptions)
-        
+
     def jsonNode(self, lineNumbers, memo):
         """Convert this abstract syntax tree to Pythonized JSON.
 
@@ -4029,7 +4029,7 @@ class If(Expression):
 
         if (not isinstance(elseClause, (list, tuple)) or not all(isinstance(x, Expression) for x in elseClause)) and not elseClause is None:
             raise PFASyntaxException("\"elseClause\" must be a list of Expressions or None", pos)
-        
+
         if len(self.thenClause) < 1:
             raise PFASyntaxException("\"then\" clause must contain at least one expression", pos)
 
@@ -4256,7 +4256,7 @@ class Cond(Expression):
                 calls = calls.union(exprCtx.calls)
 
             walkBlocks.append(Cond.WalkBlock(elseResults[-1][0].retType, elseScope.inThisScope, None, [x[1] for x in elseResults]))
-        
+
         if self.elseClause is None:
             retType = AvroNull()
         else:
@@ -4626,7 +4626,7 @@ class For(Expression):
             calls = calls.union(exprContext.calls)
 
             newSymbols[name] = exprContext.retType
-            
+
             initNameTypeExpr.append((name, exprContext.retType, exprResult))
 
         for name, avroType in newSymbols.items():
@@ -5505,7 +5505,7 @@ class BinaryFormatter(object):
     formatRawSize = re.compile("""\s*raw\s*([0-9]+)\s*""")
     formatToNull = re.compile("""\s*(null\s*)?terminated\s*""")
     formatPrefixed = re.compile("""\s*(length\s*)?prefixed\s*""")
-    
+
     class Declare(object):
         """Trait for binary format declaration."""
         pass
@@ -5890,7 +5890,7 @@ class Unpack(Expression):
         :return: (information about this abstract syntax tree node after type-checking, result of the generic task)
         """
         calls = set()
-        
+
         bytesScope = symbolTable.newScope(True, True)
         assignmentScope = symbolTable.newScope(False, False)
 
@@ -5961,7 +5961,7 @@ class Unpack(Expression):
     @titus.util.case
     class Context(ExpressionContext):
         def __init__(self, retType, calls, bytes, formatter, thenSymbols, thenClause, elseSymbols, elseClause): pass
-        
+
 @titus.util.case
 class Doc(Expression):
     """Abstract syntax tree for inline documentation."""
@@ -6291,4 +6291,3 @@ class Log(Expression):
     @titus.util.case
     class Context(ExpressionContext):
         def __init__(self, retType, calls, symbols, exprTypes, namespace): pass
-

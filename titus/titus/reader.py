@@ -3,7 +3,7 @@
 # Copyright (C) 2014  Open Data ("Open Data" refers to
 # one or more of the following companies: Open Data Partners LLC,
 # Open Data Research LLC, or Open Data Capital LLC.)
-# 
+#
 # This file is part of Hadrian.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -105,9 +105,9 @@ def jsonToAst(jsonInput):
         jsonInput = jsonInput.read()
     if isinstance(jsonInput, str):
         jsonInput = json.loads(jsonInput)
-    
+
     avroTypeBuilder = AvroTypeBuilder()
-            
+
     result = _readEngineConfig(jsonInput, avroTypeBuilder)
     avroTypeBuilder.resolveTypes()
     return result
@@ -126,7 +126,7 @@ def yamlToAst(yamlInput):
         try:
             while True:
                 event = parser.next()
-        
+
                 if isinstance(event, yaml.ScalarEvent):
                     if not event.implicit[0]:
                         return event.value
@@ -178,7 +178,7 @@ def yamlToAst(yamlInput):
                         value = read(parser)
                         if isinstance(value, yaml.events.Event):
                             raise PFASyntaxException("malformed YAML", "line {0}".format(event.end_mark.line))
-                        
+
                         out[key] = value
 
                 elif isinstance(event, (yaml.SequenceEndEvent, yaml.MappingEndEvent, yaml.DocumentEndEvent, yaml.StreamEndEvent)):
@@ -249,7 +249,7 @@ def jsonToFcnDef(jsonInput, where=""):
         jsonInput = json.loads(jsonInput)
 
     avroTypeBuilder = AvroTypeBuilder()
-    
+
     result = _readFcnDef(jsonInput, where, avroTypeBuilder)
     avroTypeBuilder.resolveTypes()
     return result
@@ -270,7 +270,7 @@ def jsonToFcnDefs(jsonInput, where=""):
         jsonInput = json.loads(jsonInput)
 
     avroTypeBuilder = AvroTypeBuilder()
-    
+
     result = _readFcnDefMap(jsonInput, where, avroTypeBuilder)
     avroTypeBuilder.resolveTypes()
     return result
@@ -297,7 +297,7 @@ def _readEngineConfig(data, avroTypeBuilder):
     if not isinstance(data, dict):
         raise PFASyntaxException("PFA engine must be a JSON object, not " + _trunc(repr(data)), at)
 
-    keys = set(x for x in data.keys() if x != "@")
+    keys = [x for x in data.keys() if x != "@"]
 
     _method = Method.MAP
     _begin = []
@@ -363,8 +363,8 @@ def _readEngineConfig(data, avroTypeBuilder):
         _name = titus.util.uniqueEngineName()
 
     required = set(["action", "input", "output"])
-    if keys.intersection(required) != required:
-        raise PFASyntaxException("missing top-level fields: {0}".format(", ".join(required.difference(keys))), at)
+    if set(keys).intersection(required) != required:
+        raise PFASyntaxException("missing top-level fields: {0}".format(", ".join(required.difference(set(keys)))), at)
     else:
         return EngineConfig(_name, _method, _input, _output, _begin, _action, _end, _fcns, _zero, _merge, _cells, _pools, _randseed, _doc, _version, _metadata, _options, at)
 
@@ -913,7 +913,7 @@ def _readCell(data, dot, avroTypeBuilder):
                     else:
                         return open(url).read()
                 _init = getit
-                
+
             elif _source == "embedded":
                 pass
                 # # which is the equivalent of...
@@ -976,7 +976,7 @@ def _readPool(data, dot, avroTypeBuilder):
                     else:
                         return open(url).read()
                 _init = getit
-                
+
             elif _source == "embedded":
                 pass
                 # # which is the equivalent of...

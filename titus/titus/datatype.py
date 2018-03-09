@@ -3,7 +3,7 @@
 # Copyright (C) 2014  Open Data ("Open Data" refers to
 # one or more of the following companies: Open Data Partners LLC,
 # Open Data Research LLC, or Open Data Capital LLC.)
-# 
+#
 # This file is part of Hadrian.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -313,7 +313,9 @@ class AvroCompiled(AvroType):
     @property
     def fullName(self):
         """Optional namespace and name joined with a dot."""
-        return self.schema.fullname
+        fullname = self.schema.fullname
+        # remove leading dots (python 3 fix)
+        return fullname.lstrip('.')
 
 class AvroNumber(AvroType):
     """Numeric AvroTypes (AvroInt, AvroLong, AvroFloat, AvroDouble)."""
@@ -427,7 +429,7 @@ class AvroFixed(AvroRaw, AvroCompiled):
                 out["name"] = self.name
             return out
 
-class AvroString(AvroIdentifier): 
+class AvroString(AvroIdentifier):
     """Avro "string" type for UTF-8 encoded strings."""
     _schema = avro.schema.PrimitiveSchema("string")
     @property
@@ -615,7 +617,7 @@ class AvroField(object):
     @property
     def has_default(self):
         """Get whether the field has default value."""
-        return self.schema.has_default        
+        return self.schema.has_default
     @property
     def order(self):
         """Get the field order."""
@@ -637,7 +639,7 @@ class AvroPlaceholder(object):
     def __init__(self, original, forwardDeclarationParser):
         self.original = original
         self.forwardDeclarationParser = forwardDeclarationParser
-        
+
     @property
     def avroType(self):
         """Called after ``titus.datatype.AvroTypeBuilder`` ``resolveTypes`` to get the resolved type."""
