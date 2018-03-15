@@ -3,7 +3,7 @@
 # Copyright (C) 2014  Open Data ("Open Data" refers to
 # one or more of the following companies: Open Data Partners LLC,
 # Open Data Research LLC, or Open Data Capital LLC.)
-# 
+#
 # This file is part of Hadrian.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 import math
 import itertools
 import json
+from functools import cmp_to_key
 
 from titus.fcn import Fcn
 from titus.fcn import LibFcn
@@ -370,7 +371,7 @@ class Sort(LibFcn):
     sig = Sig([{"a": P.Array(P.Wildcard("A"))}], P.Array(P.Wildcard("A")))
     errcodeBase = 15200
     def __call__(self, state, scope, pos, paramTypes, a):
-        return sorted(a, lambda x, y: compare(jsonNodeToAvroType(paramTypes[0]).items, x, y))
+        return sorted(a, key=cmp_to_key(lambda x, y: compare(jsonNodeToAvroType(paramTypes[0]).items, x, y)))
 provide(Sort())
 
 class SortLT(LibFcn):
@@ -378,7 +379,7 @@ class SortLT(LibFcn):
     sig = Sig([{"a": P.Array(P.Wildcard("A"))}, {"lessThan": P.Fcn([P.Wildcard("A"), P.Wildcard("A")], P.Boolean())}], P.Array(P.Wildcard("A")))
     errcodeBase = 15210
     def __call__(self, state, scope, pos, paramTypes, a, lessThan):
-        return sorted(a, toCmp(state, scope, lessThan))
+        return sorted(a, key=cmp_to_key(toCmp(state, scope, lessThan)))
 provide(SortLT())
 
 class Shuffle(LibFcn):
@@ -753,8 +754,8 @@ class Median(LibFcn):
     def __call__(self, state, scope, pos, paramTypes, a):
         if len(a) == 0:
             raise PFARuntimeException("empty array", self.errcodeBase + 0, self.name, pos)
-        sa = sorted(a, lambda x, y: compare(jsonNodeToAvroType(paramTypes[0]).items, x, y))
-        half = len(sa) / 2
+        sa = sorted(a, key=cmp_to_key(lambda x, y: compare(jsonNodeToAvroType(paramTypes[0]).items, x, y)))
+        half = int(len(sa) / 2)
         dataType = paramTypes[-1]
 
         if len(sa) % 2:
@@ -802,7 +803,7 @@ class NTile(LibFcn):
             return lowestN(a, 1, lambda x, y: compare(jsonNodeToAvroType(paramTypes[0]).items, x, y) < 0)[0]
         if p >= 1.0:
             return highestN(a, 1, lambda x, y: compare(jsonNodeToAvroType(paramTypes[0]).items, x, y) < 0)[0]
-        sa = sorted(a, lambda x, y: compare(jsonNodeToAvroType(paramTypes[0]).items, x, y))
+        sa = sorted(a, key=cmp_to_key(lambda x, y: compare(jsonNodeToAvroType(paramTypes[0]).items, x, y)))
         k = (len(a) - 1.0)*p
         f = math.floor(k)
         dataType = paramTypes[-1]
