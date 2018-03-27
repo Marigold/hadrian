@@ -100,7 +100,6 @@ def jsonToAst(jsonInput):
     :rtype: titus.pfaast.EngineConfig
     :return: a PFA configuration that has passed syntax but not semantics checks
     """
-
     if isinstance(jsonInput, io.TextIOBase):
         jsonInput = jsonInput.read()
     if isinstance(jsonInput, str):
